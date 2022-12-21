@@ -1,15 +1,15 @@
 package com.example.LaptopStoreAPI.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "Products")
-public class Product {
+@Document("SecretKeys")
+@AllArgsConstructor
+public class SecretKey {
     @Id
-    private String id;
-    private String name;
-    private float price;
-    private long createdDate;
+    private String userId;
+    private String refreshSecret;
 }

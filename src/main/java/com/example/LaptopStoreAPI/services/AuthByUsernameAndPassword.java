@@ -8,7 +8,7 @@ import com.example.LaptopStoreAPI.resposes.ApiResponse;
 import com.example.LaptopStoreAPI.resposes.models.AuthToken;
 import com.example.LaptopStoreAPI.services.enums.TokenType;
 import com.example.LaptopStoreAPI.utils.JWTUtils;
-import com.example.LaptopStoreAPI.utils.RequestHelper;
+import com.example.LaptopStoreAPI.utils.RequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,16 +21,14 @@ import java.util.Date;
 
 @Component
 public class AuthByUsernameAndPassword extends IAuthService<ApiResponse<AuthToken>, LoginWithUsernamePasswordPayload> {
-    private static final String EMPTY = "";
-
     @Autowired
-    public AuthByUsernameAndPassword(IUserService userService, ISecretKeyService secretKeyService, JWTUtils jwtUtils, RequestHelper requestHelper, EnvConfig env) {
-        super(userService, secretKeyService, jwtUtils, requestHelper, env);
+    public AuthByUsernameAndPassword(IUserService userService, ISecretKeyService secretKeyService, EnvConfig env) {
+        super(userService, secretKeyService, env);
     }
 
     private ResponseEntity<ApiResponse<AuthToken>> handleTokens(User user, String messageIfSuccess) {
         try {
-            var secret = jwtUtils.generateRandomRefreshSecret(32);
+            var secret = JWTUtils.generateRandomRefreshSecret(32);
             var accessToken = secretKeyService.getTokenHandler().generateAccessToken(user);
             var refreshToken = secretKeyService.getTokenHandler().generateRefreshToken(user, secret);
 
@@ -39,8 +37,8 @@ public class AuthByUsernameAndPassword extends IAuthService<ApiResponse<AuthToke
 
             return ResponseEntity
                     .ok()
-                    .header(HttpHeaders.SET_COOKIE, jwtUtils.getJWTCookie(accessToken, TokenType.ACCESS).toString())
-                    .header(HttpHeaders.SET_COOKIE, jwtUtils.getJWTCookie(refreshToken, TokenType.REFRESH).toString())
+                    .header(HttpHeaders.SET_COOKIE, JWTUtils.getJWTCookie(accessToken, TokenType.ACCESS).toString())
+                    .header(HttpHeaders.SET_COOKIE, JWTUtils.getJWTCookie(refreshToken, TokenType.REFRESH).toString())
                     .body(
                             new ApiResponse<>(
                                     new AuthToken(accessToken, refreshToken),
@@ -67,9 +65,9 @@ public class AuthByUsernameAndPassword extends IAuthService<ApiResponse<AuthToke
     @Override
     public ResponseEntity<ApiResponse<AuthToken>> refreshToken(HttpServletRequest request) {
         // User need to send thr refresh token with their userId
-        var refToken = requestHelper.getAuthorizationTokenFromRequest(request);
+        var refToken = RequestUtils.getAuthorizationTokenFromRequest(request);
         if (refToken != null) {
-            var decodedJWT = jwtUtils.getDecodedJWT(refToken);
+            var decodedJWT = JWTUtils.getDecodedJWT(refToken);
             var userId = decodedJWT.getSubject();
             var secret = secretKeyService.findByUserId(userId);
             if (secret != null) {

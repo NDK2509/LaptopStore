@@ -14,12 +14,12 @@ public class JWTUtils {
     private static final String JWT_ACCESS_COOKIE_NAME = "jwt-access-cookie";
     private static final String JWT_REFRESH_COOKIE_NAME = "jwt-refresh-cookie";
 
-    public DecodedJWT getDecodedJWT(String token) {
+    public static DecodedJWT getDecodedJWT(String token) {
         return JWT.decode(token);
     }
 
 
-    public ResponseCookie getJWTCookie(String token, TokenType type) {
+    public static ResponseCookie getJWTCookie(String token, TokenType type) {
         var decodedJwt = getDecodedJWT(token);
         var expriedDate = decodedJwt.getExpiresAt();
         switch (type) {
@@ -45,7 +45,7 @@ public class JWTUtils {
         }
     }
 
-    public String generateRandomRefreshSecret(int length) {
+    public static String generateRandomRefreshSecret(int length) {
         var alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         var alphabetLen = alphabet.length();
         var ran = new Random();

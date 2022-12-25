@@ -10,17 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("api/v1/product/")
+@RequestMapping("api/v1/products")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class ProductApiController implements ApiController<ApiResponse, Product> {
     protected IProductService productService;
 
     @Override
-    @GetMapping("all")
+    @GetMapping("")
     public ResponseEntity<ApiResponse> getAll(HttpServletRequest request) {
 
         var productList = productService.findAll();
@@ -31,7 +29,7 @@ public class ProductApiController implements ApiController<ApiResponse, Product>
     }
 
     @Override
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getOneById(HttpServletRequest request, @PathVariable("id") String id) {
         var product = productService.findById(id);
         if (product == null) {
@@ -39,6 +37,7 @@ public class ProductApiController implements ApiController<ApiResponse, Product>
         }
         return new ResponseEntity<>(new ProductApiResponse(product, "Get product successfully!"), HttpStatus.OK);
     }
+
     @Override
     public ResponseEntity<ApiResponse> save(HttpServletRequest request, Product model) {
         return null;

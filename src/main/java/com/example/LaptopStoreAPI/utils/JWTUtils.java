@@ -11,15 +11,15 @@ import java.util.Random;
 
 @Component
 public class JWTUtils {
-    private static final String JWT_ACCESS_COOKIE_NAME = "jwt-access-cookie";
-    private static final String JWT_REFRESH_COOKIE_NAME = "jwt-refresh-cookie";
+    public static final String JWT_ACCESS_COOKIE_NAME = "jwt-access-cookie";
+    public static final String JWT_REFRESH_COOKIE_NAME = "jwt-refresh-cookie";
 
     public static DecodedJWT getDecodedJWT(String token) {
         return JWT.decode(token);
     }
 
 
-    public static ResponseCookie getJWTCookie(String token, TokenType type) {
+    public static String getJWTCookie(String token, TokenType type) {
         var decodedJwt = getDecodedJWT(token);
         var expriedDate = decodedJwt.getExpiresAt();
         switch (type) {
@@ -32,7 +32,8 @@ public class JWTUtils {
                         .httpOnly(true)
                         .maxAge((expriedDate.getTime() - new Date().getTime())/1000)
                         .path("/api/v1")
-                        .build();
+                        .build()
+                        .toString();
             }
             case REFRESH -> {
                 return ResponseCookie
@@ -40,7 +41,8 @@ public class JWTUtils {
                         .httpOnly(true)
                         .maxAge((expriedDate.getTime() - new Date().getTime())/1000)
                         .path("/api/refresh-token")
-                        .build();
+                        .build()
+                        .toString();
             }
         }
     }

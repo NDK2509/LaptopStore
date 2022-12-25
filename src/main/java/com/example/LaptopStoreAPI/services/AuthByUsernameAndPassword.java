@@ -37,8 +37,8 @@ public class AuthByUsernameAndPassword extends IAuthService<ApiResponse<AuthToke
 
             return ResponseEntity
                     .ok()
-                    .header(HttpHeaders.SET_COOKIE, JWTUtils.getJWTCookie(accessToken, TokenType.ACCESS).toString())
-                    .header(HttpHeaders.SET_COOKIE, JWTUtils.getJWTCookie(refreshToken, TokenType.REFRESH).toString())
+                    .header(HttpHeaders.SET_COOKIE, JWTUtils.getJWTCookie(accessToken, TokenType.ACCESS))
+                    .header(HttpHeaders.SET_COOKIE, JWTUtils.getJWTCookie(refreshToken, TokenType.REFRESH))
                     .body(
                             new ApiResponse<>(
                                     new AuthToken(accessToken, refreshToken),
@@ -46,7 +46,7 @@ public class AuthByUsernameAndPassword extends IAuthService<ApiResponse<AuthToke
                             )
                     );
         } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse(null, "Please try again!" + e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(null, "Please try again!" + e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -54,9 +54,9 @@ public class AuthByUsernameAndPassword extends IAuthService<ApiResponse<AuthToke
     public ResponseEntity<ApiResponse<AuthToken>> login(LoginWithUsernamePasswordPayload reqBody) {
         var user = userService.findByUsername(reqBody.getUsername());
         if (user == null)
-            return new ResponseEntity<>(new ApiResponse(null, "User is not found!"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ApiResponse<>(null, "User is not found!"), HttpStatus.NOT_FOUND);
         if (!BCrypt.checkpw(reqBody.getPassword(), user.getPassword()))
-            return new ResponseEntity<>(new ApiResponse(null, "Password wrong!"), HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new ApiResponse<>(null, "Password wrong!"), HttpStatus.NOT_ACCEPTABLE);
 
         // handle token
         return handleTokens(user, "Login successfully!");

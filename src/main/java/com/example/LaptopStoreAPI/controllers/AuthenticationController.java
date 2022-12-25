@@ -1,6 +1,7 @@
 package com.example.LaptopStoreAPI.controllers;
 
 import com.example.LaptopStoreAPI.payloads.LoginWithUsernamePasswordPayload;
+import com.example.LaptopStoreAPI.resposes.ApiResponse;
 import com.example.LaptopStoreAPI.resposes.models.AuthToken;
 import com.example.LaptopStoreAPI.services.AuthByUsernameAndPassword;
 import com.example.LaptopStoreAPI.services.IAuthHandler;
@@ -20,14 +21,13 @@ public class AuthenticationController {
     protected AuthByUsernameAndPassword authByUsernameAndPassword;
 
     @PostMapping("login")
-    public ResponseEntity<AuthToken> login(@RequestBody LoginWithUsernamePasswordPayload loginRB) {
+    public ResponseEntity<ApiResponse<AuthToken>> login(@RequestBody LoginWithUsernamePasswordPayload loginRB) {
         authHandler.setAuthService(authByUsernameAndPassword);
         return authHandler.login(loginRB);
     }
 
     @PostMapping("refresh-token")
-    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
-//        return authenticationService.refreshToken(request);
+    public ResponseEntity<ApiResponse<AuthToken>> refreshToken(HttpServletRequest request) {
         return authHandler.refreshToken(request);
     }
 }

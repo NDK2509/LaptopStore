@@ -1,8 +1,10 @@
 package com.example.LaptopStoreAPI.payloads;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class LoginWithUsernamePasswordPayload extends AuthPayload {
     private String username;
     private String password;

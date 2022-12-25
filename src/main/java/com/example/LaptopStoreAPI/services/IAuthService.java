@@ -1,6 +1,7 @@
 package com.example.LaptopStoreAPI.services;
 
 import com.example.LaptopStoreAPI.configs.EnvConfig;
+import com.example.LaptopStoreAPI.payloads.AuthPayload;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,13 +15,10 @@ import org.springframework.stereotype.Component;
 @Setter
 @AllArgsConstructor
 public abstract class IAuthService<T, R> {
-    @Autowired
     protected IUserService userService;
-    @Autowired
     protected ISecretKeyService secretKeyService;
-    @Autowired
     protected EnvConfig env;
 
-    public abstract ResponseEntity<T> login(R requestBody);
+    public abstract ResponseEntity<T> login(R payload);
     public abstract ResponseEntity<T> refreshToken(HttpServletRequest request);
 }

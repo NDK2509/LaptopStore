@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public class EnvConfig {
     @Value("${secret-key.accessToken}")
-    private String accessToken;
+    private String accessTokenSecret;
     @Value("${gmt-offset}")
     private int GMTOffset;
     @Value("${expired-time.access-token}")

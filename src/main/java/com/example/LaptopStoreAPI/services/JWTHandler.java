@@ -19,7 +19,7 @@ public class JWTHandler implements ITokenHandler<User> {
     @Autowired
     public JWTHandler(EnvConfig env) {
         this.env = env;
-        this.accessTokenAlg = Algorithm.HMAC512(env.getAccessToken());
+        this.accessTokenAlg = Algorithm.HMAC512(env.getAccessTokenSecret());
     }
 
     @Override
@@ -29,8 +29,8 @@ public class JWTHandler implements ITokenHandler<User> {
             return JWT.create()
                     .withSubject(user.getUserId())
                     .withIssuer("auth0")
-                    .withClaim("createdDate", now.getTime() + env.getGMTOffset() * 1000)
-                    .withExpiresAt(new Date(now.getTime() + (env.getAccessTokenExpiredTime() + env.getGMTOffset())*1000))
+                    .withClaim("createdDate", now.getTime() + env.getGMTOffset() * 1000L)
+                    .withExpiresAt(new Date(now.getTime() + (env.getAccessTokenExpiredTime() + env.getGMTOffset())* 1000L))
                     .sign(accessTokenAlg);
         } catch (JWTCreationException e) {
             throw e;
@@ -44,8 +44,8 @@ public class JWTHandler implements ITokenHandler<User> {
             return JWT.create()
                     .withSubject(user.getUserId())
                     .withIssuer("auth0")
-                    .withClaim("createdDate", now.getTime() + env.getGMTOffset() * 1000)
-                    .withExpiresAt(new Date(now.getTime() + (env.getRefreshTokenExpiredTime() + env.getGMTOffset())*1000))
+                    .withClaim("createdDate", now.getTime() + env.getGMTOffset() * 1000L)
+                    .withExpiresAt(new Date(now.getTime() + (env.getRefreshTokenExpiredTime() + env.getGMTOffset())* 1000L))
                     .sign(Algorithm.HMAC512(secret));
         } catch (JWTCreationException e) {
             throw e;

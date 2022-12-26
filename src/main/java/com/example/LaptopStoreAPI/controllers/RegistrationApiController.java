@@ -18,18 +18,18 @@ public class RegistrationApiController {
     protected IUserService userService;
 
     @PostMapping("register")
-    public ResponseEntity<ApiResponse> register(@RequestBody RegistrationPayload registrationPayload) {
+    public ResponseEntity<ApiResponse<?>> register(@RequestBody RegistrationPayload registrationPayload) {
         if (userService.existsByEmail(registrationPayload.getEmail())) {
-            return new ResponseEntity<>(new ApiResponse(null, "This email already exists!"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ApiResponse<>(null, "This email already exists!"), HttpStatus.NOT_FOUND);
         }
         if (userService.existsByUsername(registrationPayload.getUsername())) {
-            return new ResponseEntity<>(new ApiResponse(null, "This username already exists!"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ApiResponse<>(null, "This username already exists!"), HttpStatus.NOT_FOUND);
         }
 
         // add user to DB
         var hashedPw = BCrypt.hashpw(registrationPayload.getPassword(), BCrypt.gensalt(10));
         userService.save(new User(registrationPayload.getUsername(), hashedPw, registrationPayload.getEmail()));
 
-        return new ResponseEntity<>(new ApiResponse(null, "Create user successfully!"), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(null, "Create user successfully!"), HttpStatus.OK);
     }
 }

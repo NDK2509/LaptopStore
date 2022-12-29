@@ -12,13 +12,22 @@ import java.util.List;
 public class ProductService implements IProductService{
     private IProductRepository repository;
     @Override
+    public List<Product> findAll() {
+        return repository.findAll();
+    }
+    @Override
     public Product findById(String id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Product> findAll() {
-        return repository.findAll();
+    public Product create(Product product) {
+        return repository.save(product);
+    }
+
+    @Override
+    public Product update(Product product) {
+        return repository.save(product);
     }
 
     @Override
@@ -26,5 +35,10 @@ public class ProductService implements IProductService{
         var product = this.findById(id);
         if (product != null) repository.delete(product);
         return product;
+    }
+
+    @Override
+    public boolean exitsById(String id) {
+        return repository.existsById(id);
     }
 }

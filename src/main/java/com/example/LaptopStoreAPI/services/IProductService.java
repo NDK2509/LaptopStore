@@ -5,8 +5,10 @@ import com.example.LaptopStoreAPI.models.Product;
 import java.util.List;
 
 public interface IProductService {
-    Product findById(String id);
     List<Product> findAll();
+    Product findById(String id);
+    Product create(Product product);
+    Product update(Product product);
     Product delete(String id);
-
+    boolean exitsById(String id);
 }

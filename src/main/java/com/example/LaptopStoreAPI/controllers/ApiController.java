@@ -4,8 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface ApiController<T, M> {
-    ResponseEntity<T> getAll(HttpServletRequest request);
-    ResponseEntity<T> getOneById(HttpServletRequest request, String id);
-    ResponseEntity<T> save(HttpServletRequest request, M model);
-    ResponseEntity<T> delete(HttpServletRequest request, String id);
+    ResponseEntity<T> getAll();
+    ResponseEntity<T> getById(String id);
+    ResponseEntity<T> create(M model);
+    ResponseEntity<T> update(String id, M model);
+    ResponseEntity<T> delete(String id);
 }

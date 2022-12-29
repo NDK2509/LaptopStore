@@ -1,0 +1,29 @@
+POST http://localhost:2611/api/login
+Content-Type: application/json
+
+{
+  "username": "Cuke",
+  "password": "2611"
+}
+###
+POST http://localhost:2611/api/refresh-token
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzYWY4OGNlZC1lMzQzLTQxNTQtOGE1YS1mNDQwMTAxNzNlNjMiLCJjcmVhdGVkRGF0ZSI6MTY3MjE4MTQ0MTA5OSwiaXNzIjoiYXV0aDAiLCJleHAiOjE2NzMwNDU0NDF9.Z7YDtgBKFP77VHaZbu1VGL7pRzHH2f1uy9s3z9hrCY-e05nOcoeNVFiU7obOnHRu_9-HjVjSoXEZv7r9j-3dPA
+
+###
+POST http://localhost:2611/api/register
+Content-Type: application/json
+
+{
+  "username": "CukeCute1",
+  "password": "2611",
+  "email":"Cukengocnghech1@gmail.com"
+}
+###
+GET http://localhost:2611/api/v1/products
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzYWY4OGNlZC1lMzQzLTQxNTQtOGE1YS1mNDQwMTAxNzNlNjMiLCJjcmVhdGVkRGF0ZSI6MTY3MjE4MTU2NTA2NywiaXNzIjoiYXV0aDAiLCJleHAiOjE2NzMwNDU1NjV9.pRFDynStZDbATggtYyh2ocLvlmR_r0pYGlCMnZ0sG9FiiJA_I1IhnEqwipjkntxhU9eugO_XVNPHL0hqnbpYGw
+###
+PUT http://localhost:2611/api/v1/products/2616ca41-0f66-42c8-b4b3-84d44e1f9daa
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzYWY4OGNlZC1lMzQzLTQxNTQtOGE1YS1mNDQwMTAxNzNlNjMiLCJjcmVhdGVkRGF0ZSI6MTY3MjIwNjIxNzIwNywiaXNzIjoiYXV0aDAiLCJleHAiOjE2NzIyMDk4MTd9.K_aolVKRguctobvpp-7pI1dbgs3PioLcnVyGgFgwZdyZ3wzgci-W2HnNaQL01Kmekv-okVW7GgBLKKC18tgx6g
+###
+DELETE http://localhost:2611/api/v1/products/2616ca41-0f66-42c8-b4b3-84d44e1f9daa
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.s c.ChY0dfM8y8buY-_yxg_JyPco2hveepZoslbUTtGqmKWBD16-SqE23Ea2DrNHHxv0yAzxE5x5UTVjC_eWc_joKg

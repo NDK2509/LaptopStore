@@ -11,4 +11,5 @@ public interface IProductRepository extends MongoRepository<Product, String> {
     Optional<Product> findById(String id);
     Product save(Product product);
     void delete(Product product);
+    boolean existsById(String id);
 }
